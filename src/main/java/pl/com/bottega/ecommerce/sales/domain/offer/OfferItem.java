@@ -20,31 +20,23 @@ import java.math.BigDecimal;
 public class OfferItem {
 
     private Product product;
-
+    private Discount discount;
 	private int quantity;
-
 	private BigDecimal totalCost;
-
 	private String currency;
 
-	// discount
-	private String discountCause;
-
-	private BigDecimal discount;
-
-	public OfferItem(Product product, int quantity) {
-		this(product, quantity, null, null);
+    public OfferItem(Product product, int quantity) {
+		this(product, quantity, null);
 	}
 
-	public OfferItem(Product product, int quantity, BigDecimal discount, String discountCause) {
+	public OfferItem(Product product, int quantity, Discount discount) {
 		this.product = product;
 		this.quantity = quantity;
-		this.discount = discount;
-		this.discountCause = discountCause;
+        this.discount = discount;
 
 		BigDecimal discountValue = new BigDecimal(0);
-		if (discount != null)
-			discountValue = discountValue.subtract(discount);
+		if (discount.getValue() != null)
+			discountValue = discountValue.subtract(discount.getValue());
 
 		this.totalCost = product.getPrice().multiply(new BigDecimal(quantity)).subtract(discountValue);
 	}
@@ -62,11 +54,11 @@ public class OfferItem {
 	}
 
 	public BigDecimal getDiscount() {
-		return discount;
+		return discount.getValue();
 	}
 
 	public String getDiscountCause() {
-		return discountCause;
+		return discount.getCause();
 	}
 
 	public int getQuantity() {
@@ -77,7 +69,7 @@ public class OfferItem {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((discount == null) ? 0 : discount.hashCode());
+		result = prime * result + ((discount.getValue() == null) ? 0 : discount.getValue().hashCode());
 		result = prime * result + ((product.getName() == null) ? 0 : product.getName().hashCode());
 		result = prime * result + ((product.getPrice() == null) ? 0 : product.getPrice().hashCode());
 		result = prime * result + ((product.getId() == null) ? 0 : product.getId().hashCode());
@@ -96,10 +88,10 @@ public class OfferItem {
 		if (getClass() != obj.getClass())
 			return false;
 		OfferItem other = (OfferItem) obj;
-		if (discount == null) {
-			if (other.discount != null)
+		if (discount.getValue() == null) {
+			if (other.discount.getValue() != null)
 				return false;
-		} else if (!discount.equals(other.discount))
+		} else if (!discount.getValue().equals(other.discount.getValue()))
 			return false;
 		if (product.getName() == null) {
 			if (other.product.getName() != null)
