@@ -1,6 +1,5 @@
 package pl.com.bottega.ecommerce.sales.domain.offer;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -9,7 +8,7 @@ import java.util.Date;
 public class Product {
 
     private String id;
-    private BigDecimal price;
+    private Money money;
     private String name;
     private Date snapshotDate;
     private String type;
@@ -20,14 +19,6 @@ public class Product {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public String getName() {
@@ -54,6 +45,14 @@ public class Product {
         this.type = type;
     }
 
+    public Money getMoney() {
+        return money;
+    }
+
+    public void setMoney(Money money) {
+        this.money = money;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,8 +61,8 @@ public class Product {
         Product product = (Product) o;
 
         if (!id.equals(product.id)) return false;
+        if (!money.equals(product.money)) return false;
         if (!name.equals(product.name)) return false;
-        if (!price.equals(product.price)) return false;
         if (!snapshotDate.equals(product.snapshotDate)) return false;
         if (!type.equals(product.type)) return false;
 
@@ -73,7 +72,7 @@ public class Product {
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + price.hashCode();
+        result = 31 * result + money.hashCode();
         result = 31 * result + name.hashCode();
         result = 31 * result + snapshotDate.hashCode();
         result = 31 * result + type.hashCode();

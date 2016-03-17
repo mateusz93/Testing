@@ -1,15 +1,12 @@
 package pl.com.bottega.ecommerce.sales.domain.offer;
 
-import java.math.BigDecimal;
-
 /**
  * @author Mateusz Wieczorek
  */
 public class Discount {
 
+    private Money money;
     private String cause;
-    private BigDecimal value;
-    private String currency;
 
     public String getCause() {
         return cause;
@@ -19,20 +16,12 @@ public class Discount {
         this.cause = cause;
     }
 
-    public BigDecimal getValue() {
-        return value;
+    public Money getMoney() {
+        return money;
     }
 
-    public void setValue(BigDecimal value) {
-        this.value = value;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setMoney(Money money) {
+        this.money = money;
     }
 
     @Override
@@ -43,8 +32,7 @@ public class Discount {
         Discount discount = (Discount) o;
 
         if (!cause.equals(discount.cause)) return false;
-        if (!currency.equals(discount.currency)) return false;
-        if (!value.equals(discount.value)) return false;
+        if (!money.equals(discount.money)) return false;
 
         return true;
     }
@@ -52,8 +40,7 @@ public class Discount {
     @Override
     public int hashCode() {
         int result = cause.hashCode();
-        result = 31 * result + value.hashCode();
-        result = 31 * result + currency.hashCode();
+        result = 31 * result + money.hashCode();
         return result;
     }
 
