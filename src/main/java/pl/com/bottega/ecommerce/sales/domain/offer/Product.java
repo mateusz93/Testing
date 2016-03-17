@@ -8,50 +8,50 @@ import java.util.Date;
  */
 public class Product {
 
-    private String productId;
-    private BigDecimal productPrice;
-    private String productName;
-    private Date productSnapshotDate;
-    private String productType;
+    private String id;
+    private BigDecimal price;
+    private String name;
+    private Date snapshotDate;
+    private String type;
 
-    public String getProductId() {
-        return productId;
+    public String getId() {
+        return id;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public BigDecimal getProductPrice() {
-        return productPrice;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setProductPrice(BigDecimal productPrice) {
-        this.productPrice = productPrice;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Date getProductSnapshotDate() {
-        return productSnapshotDate;
+    public Date getSnapshotDate() {
+        return snapshotDate;
     }
 
-    public void setProductSnapshotDate(Date productSnapshotDate) {
-        this.productSnapshotDate = productSnapshotDate;
+    public void setSnapshotDate(Date snapshotDate) {
+        this.snapshotDate = snapshotDate;
     }
 
-    public String getProductType() {
-        return productType;
+    public String getType() {
+        return type;
     }
 
-    public void setProductType(String productType) {
-        this.productType = productType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
@@ -61,22 +61,22 @@ public class Product {
 
         Product product = (Product) o;
 
-        if (!productId.equals(product.productId)) return false;
-        if (!productName.equals(product.productName)) return false;
-        if (!productPrice.equals(product.productPrice)) return false;
-        if (!productSnapshotDate.equals(product.productSnapshotDate)) return false;
-        if (!productType.equals(product.productType)) return false;
+        if (!id.equals(product.id)) return false;
+        if (!name.equals(product.name)) return false;
+        if (!price.equals(product.price)) return false;
+        if (!snapshotDate.equals(product.snapshotDate)) return false;
+        if (!type.equals(product.type)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = productId.hashCode();
-        result = 31 * result + productPrice.hashCode();
-        result = 31 * result + productName.hashCode();
-        result = 31 * result + productSnapshotDate.hashCode();
-        result = 31 * result + productType.hashCode();
+        int result = id.hashCode();
+        result = 31 * result + price.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + snapshotDate.hashCode();
+        result = 31 * result + type.hashCode();
         return result;
     }
 }
