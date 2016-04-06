@@ -42,4 +42,12 @@ public class BinarySearchTest {
         assertThat(sequence[0] == key, is(true));
     }
 
+    @Test
+    public void checkWhetherKeyIsOnTheLastPositionInASequence() {
+        int[] sequence = {3, 5, 17, 33, 99};
+        int key = 99;
+        SearchResult searchResult = BinarySearch.search(key, sequence);
+        assertThat(searchResult.isFound(), is(true));
+        assertThat(sequence[sequence.length-1] == key, is(true));
+    }
 }
