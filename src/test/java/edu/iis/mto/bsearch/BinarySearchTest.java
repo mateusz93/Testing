@@ -31,6 +31,12 @@ public class BinarySearchTest {
         int position = searchResult.getPosition();
         assertThat(searchResult.isFound(), is(false));
         assertThat(position, is(-1));
+
+        int[] newSequence = {1, 23, 44, 55};
+        searchResult = BinarySearch.search(key, newSequence);
+        position = searchResult.getPosition();
+        assertThat(searchResult.isFound(), is(false));
+        assertThat(position, is(-1));
     }
 
     @Test
@@ -63,4 +69,5 @@ public class BinarySearchTest {
             assertThat(sequence[sequence.length / 2] == key || sequence[(sequence.length / 2) - 1] == key, is(true));
         }
     }
+
 }
