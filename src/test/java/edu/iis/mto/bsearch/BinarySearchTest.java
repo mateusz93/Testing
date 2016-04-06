@@ -1,6 +1,7 @@
 package edu.iis.mto.bsearch;
 
 
+import edu.iis.mto.bsearch.exception.SequenceNotSortedException;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -74,6 +75,13 @@ public class BinarySearchTest {
     public void shouldThrowExceptionIfSequenceLenghtIsZero() {
         int[] sequence = {};
         int key = 17;
+        BinarySearch.search(key, sequence);
+    }
+
+    @Test(expected=SequenceNotSortedException.class)
+    public void checkWhetherASequenceIsNotSorted() {
+        int[] sequence = {3, 5, 103, 55, 99};
+        int key = 55;
         BinarySearch.search(key, sequence);
     }
 }
