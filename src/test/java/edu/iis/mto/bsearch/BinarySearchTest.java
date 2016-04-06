@@ -50,4 +50,17 @@ public class BinarySearchTest {
         assertThat(searchResult.isFound(), is(true));
         assertThat(sequence[sequence.length-1] == key, is(true));
     }
+
+    @Test
+    public void checkWhetherKeyIsOnCenterPositionInASequence() {
+        int[] sequence = {3, 5, 17, 55, 99};
+        int key = 17;
+        SearchResult searchResult = BinarySearch.search(key, sequence);
+        assertThat(searchResult.isFound(), is(true));
+        if (sequence.length % 2 == 1) {
+            assertThat(sequence[sequence.length / 2] == key, is(true));
+        } else {
+            assertThat(sequence[sequence.length / 2] == key || sequence[(sequence.length / 2) - 1] == key, is(true));
+        }
+    }
 }
