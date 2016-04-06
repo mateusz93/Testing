@@ -3,6 +3,8 @@
  */
 package edu.iis.mto.bsearch;
 
+import edu.iis.mto.bsearch.exception.SequenceNotSortedException;
+
 /**
  * Utility Class dla wyszukiwania binarnego
  * 
@@ -20,9 +22,12 @@ public class BinarySearch {
 	 *         position (jezeli znaleziony - pozycja w sekwencji, jezeli nie
 	 *         znaleziony -1)
 	 */
-	public static SearchResult search(int key, int[] seq) {
+	public static SearchResult search(int key, int[] seq) throws SequenceNotSortedException {
 		if (seq.length == 0) {
 			throw new IllegalArgumentException("Sequence can't be empty");
+		}
+		if (!isSorted(seq)) {
+			throw new SequenceNotSortedException("Sequence must be sorted");
 		}
 		int start = 0;
 		int end = seq.length - 1;
@@ -43,6 +48,15 @@ public class BinarySearch {
 
 		}
 		return result;
+	}
+
+	private static boolean isSorted(int[] seq) {
+		for (int i = 0; i < seq.length-1; ++i) {
+			if (seq[i] > seq[i+1]) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

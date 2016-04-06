@@ -14,7 +14,7 @@ import static org.hamcrest.core.IsNot.not;
 public class BinarySearchTest {
 
     @Test
-    public void checkWhetherKeyIsInASequence() {
+    public void checkWhetherKeyIsInASequence() throws SequenceNotSortedException {
         int[] sequence = {13};
         int key = 13;
         SearchResult searchResult = BinarySearch.search(key, sequence);
@@ -25,7 +25,7 @@ public class BinarySearchTest {
     }
 
     @Test
-    public void checkWhetherKeyIsNotInASequence() {
+    public void checkWhetherKeyIsNotInASequence() throws SequenceNotSortedException {
         int[] sequence = {3};
         int key = 13;
         SearchResult searchResult = BinarySearch.search(key, sequence);
@@ -41,7 +41,7 @@ public class BinarySearchTest {
     }
 
     @Test
-    public void checkWhetherKeyIsOnFirstPositionInASequence() {
+    public void checkWhetherKeyIsOnFirstPositionInASequence() throws SequenceNotSortedException {
         int[] sequence = {3, 5, 17, 33, 99};
         int key = 3;
         SearchResult searchResult = BinarySearch.search(key, sequence);
@@ -50,7 +50,7 @@ public class BinarySearchTest {
     }
 
     @Test
-    public void checkWhetherKeyIsOnTheLastPositionInASequence() {
+    public void checkWhetherKeyIsOnTheLastPositionInASequence() throws SequenceNotSortedException {
         int[] sequence = {3, 5, 17, 33, 99};
         int key = 99;
         SearchResult searchResult = BinarySearch.search(key, sequence);
@@ -59,7 +59,7 @@ public class BinarySearchTest {
     }
 
     @Test
-    public void checkWhetherKeyIsOnCenterPositionInASequence() {
+    public void checkWhetherKeyIsOnCenterPositionInASequence() throws SequenceNotSortedException {
         int[] sequence = {3, 5, 17, 55, 99};
         int key = 17;
         SearchResult searchResult = BinarySearch.search(key, sequence);
@@ -72,14 +72,14 @@ public class BinarySearchTest {
     }
 
     @Test(expected=IllegalArgumentException.class)
-    public void shouldThrowExceptionIfSequenceLenghtIsZero() {
+    public void shouldThrowExceptionIfSequenceLenghtIsZero() throws SequenceNotSortedException {
         int[] sequence = {};
         int key = 17;
         BinarySearch.search(key, sequence);
     }
 
     @Test(expected=SequenceNotSortedException.class)
-    public void checkWhetherASequenceIsNotSorted() {
+    public void checkWhetherASequenceIsNotSorted() throws SequenceNotSortedException {
         int[] sequence = {3, 5, 103, 55, 99};
         int key = 55;
         BinarySearch.search(key, sequence);
