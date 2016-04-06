@@ -33,4 +33,13 @@ public class BinarySearchTest {
         assertThat(position, is(-1));
     }
 
+    @Test
+    public void checkWhetherKeyIsOnFirstPositionInASequence() {
+        int[] sequence = {3, 5, 17, 33, 99};
+        int key = 3;
+        SearchResult searchResult = BinarySearch.search(key, sequence);
+        assertThat(searchResult.isFound(), is(true));
+        assertThat(sequence[0] == key, is(true));
+    }
+
 }
