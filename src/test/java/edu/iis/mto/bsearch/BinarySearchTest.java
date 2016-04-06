@@ -70,4 +70,10 @@ public class BinarySearchTest {
         }
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void shouldThrowExceptionIfSequenceLenghtIsZero() {
+        int[] sequence = {};
+        int key = 17;
+        BinarySearch.search(key, sequence);
+    }
 }
