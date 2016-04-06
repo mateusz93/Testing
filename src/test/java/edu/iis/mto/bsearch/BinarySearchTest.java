@@ -23,4 +23,14 @@ public class BinarySearchTest {
         assertThat(sequence[position] == key, is(true));
     }
 
+    @Test
+    public void checkWhetherKeyIsNotInASequence() {
+        int[] sequence = {3};
+        int key = 13;
+        SearchResult searchResult = BinarySearch.search(key, sequence);
+        int position = searchResult.getPosition();
+        assertThat(searchResult.isFound(), is(false));
+        assertThat(position, is(-1));
+    }
+
 }
