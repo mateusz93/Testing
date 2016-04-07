@@ -3,6 +3,7 @@ package pl.com.bottega.ecommerce.sharedkernel;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -40,4 +41,12 @@ public class MoneyTest {
         Money newMoney = money.subtract(money2);
         assertThat(newMoney.getDenomination().equals(number.subtract(number2)), is(true));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addMoneyWithDifferentCurrencyTest() {
+        Money money = new Money(23.5, Currency.getInstance("EUR"));
+        Money money2 = new Money(243.2, Currency.getInstance("PLN"));
+        Money newMoney = money.add(money2);
+    }
+
 }
