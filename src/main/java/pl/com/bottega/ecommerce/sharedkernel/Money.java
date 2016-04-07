@@ -18,8 +18,8 @@ package pl.com.bottega.ecommerce.sharedkernel;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Currency;
+import java.util.Objects;
 
-import org.fest.util.Objects;
 
 public class Money {
 	public static final Currency DEFAULT_CURRENCY = Currency.getInstance("EUR");
@@ -27,6 +27,10 @@ public class Money {
 	public static final Money ZERO = new Money(BigDecimal.ZERO);
 
 	private BigDecimal denomination;
+
+	public BigDecimal getDenomination() {
+		return denomination;
+	}
 
 	private String currencyCode;
 
@@ -144,7 +148,7 @@ public class Money {
 		if (getClass() != obj.getClass())
 			return false;
 		Money other = (Money) obj;
-		return compatibleCurrency(other) && Objects.areEqual(denomination, other.denomination);
+		return compatibleCurrency(other) && Objects.equals(denomination, other.denomination);
 	}
 
 }
