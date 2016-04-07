@@ -21,4 +21,13 @@ public class MoneyTest {
         assertThat(newMoney.getDenomination().equals(number.multiply(new BigDecimal("651.6"))), is(true));
     }
 
+    @Test
+    public void addTest() {
+        BigDecimal number = new BigDecimal("13.2").setScale(2);
+        BigDecimal number2 = new BigDecimal("11.6");
+        Money money = new Money(number);
+        Money money2 = new Money(number2);
+        Money newMoney = money.add(money2);
+        assertThat(newMoney.getDenomination().equals(number.add(number2)), is(true));
+    }
 }
