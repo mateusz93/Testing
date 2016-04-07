@@ -44,4 +44,11 @@ public class SimilarityFinderTest {
         assertThat(finder.calculateJackardSimilarity(seq1, seq2), is(1.0 / 5.0));
     }
 
+    @Test
+    public void differenceSequence3Test() {
+        SimilarityFinder finder = new SimilarityFinder(searcher);
+        int[] seq1 = {23, 33, 44, 55};
+        int[] seq2 = {55, 44, 33, 23};
+        assertThat(finder.calculateJackardSimilarity(seq1, seq2), is(1d));
+    }
 }
