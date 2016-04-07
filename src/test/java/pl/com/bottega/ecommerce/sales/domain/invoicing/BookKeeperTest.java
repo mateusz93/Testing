@@ -9,15 +9,11 @@ import pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductType;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 /**
@@ -25,47 +21,41 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
  */
 public class BookKeeperTest {
 
-    private ClientData clientData;
     private RequestItem requestItem;
-    private Money money;
-    private ProductData productData;
     private BookKeeper bookKeeper;
     private InvoiceRequest invoiceRequest;
-    private InvoiceFactory invoiceFactory;
     private TaxPolicy taxPolicy;
     private Tax tax;
 
     @Before
     public void setUp() {
-        productData = mock(ProductData.class);
+        ProductData productData = mock(ProductData.class);
         taxPolicy = mock(TaxPolicy.class);
 
-        clientData = new ClientData(Id.generate(), "Dane");
-        money = new Money(new BigDecimal("23"));
+        Money money = new Money(new BigDecimal("23"));
         tax = new Tax(money, "tax");
 
         requestItem = new RequestItem(productData, 12, money);
-        invoiceRequest = new InvoiceRequest(clientData);
+        invoiceRequest = new InvoiceRequest(new ClientData(Id.generate(), "Dane"));
 
-        invoiceFactory = new InvoiceFactory();
-        bookKeeper = new BookKeeper(invoiceFactory);
+        bookKeeper = new BookKeeper(new InvoiceFactory());
     }
 
     @Test
-    public void oneReturnInvoiceTest() {
+    public void calledInvoiceWithOneItemTest() {
         invoiceRequest.add(requestItem);
         when(taxPolicy.calculateTax(any(ProductType.class), any(Money.class))).thenReturn(tax);
         assertThat(bookKeeper.issuance(invoiceRequest, taxPolicy).getItems().size() == 1, is(true));
     }
 
     @Test
-    public void zeroReturnInvoiceTest() {
+    public void calledInvoiceWithZeroItemTest() {
         when(taxPolicy.calculateTax(any(ProductType.class), any(Money.class))).thenReturn(tax);
         assertThat(bookKeeper.issuance(invoiceRequest, taxPolicy).getItems().size() == 0, is(true));
     }
 
     @Test
-    public void twiceCalledCalculateTaxTest() {
+    public void twiceCalledCalculateTaxMethodTest() {
         invoiceRequest.add(requestItem);
         invoiceRequest.add(requestItem);
         when(taxPolicy.calculateTax(any(ProductType.class), any(Money.class))).thenReturn(tax);
@@ -74,7 +64,7 @@ public class BookKeeperTest {
     }
 
     @Test
-    public void zeroCalledCalculateTaxTest() {
+    public void zeroCalledCalculateTaxMethodTest() {
         when(taxPolicy.calculateTax(any(ProductType.class), any(Money.class))).thenReturn(tax);
         bookKeeper.issuance(invoiceRequest, taxPolicy);
         verify(taxPolicy, times(0)).calculateTax(any(ProductType.class), any(Money.class));
