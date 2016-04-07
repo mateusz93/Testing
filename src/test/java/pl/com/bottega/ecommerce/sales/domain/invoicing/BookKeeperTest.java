@@ -16,7 +16,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 /**
  * @Author Mateusz Wieczorek
@@ -55,4 +57,13 @@ public class BookKeeperTest {
         when(taxPolicy.calculateTax(any(ProductType.class), any(Money.class))).thenReturn(tax);
         assertThat(bookKeeper.issuance(invoiceRequest, taxPolicy).getItems().size() == 1, is(true));
     }
+
+    @Test
+    public void twiceCalledCalculateTaxTest() {
+        invoiceRequest.add(requestItem);
+        when(taxPolicy.calculateTax(any(ProductType.class), any(Money.class))).thenReturn(tax);
+        bookKeeper.issuance(invoiceRequest, taxPolicy);
+        verify(taxPolicy, times(2)).calculateTax(any(ProductType.class), any(Money.class));
+    }
+
 }
