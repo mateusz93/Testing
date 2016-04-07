@@ -59,6 +59,12 @@ public class BookKeeperTest {
     }
 
     @Test
+    public void zeroReturnInvoiceTest() {
+        when(taxPolicy.calculateTax(any(ProductType.class), any(Money.class))).thenReturn(tax);
+        assertThat(bookKeeper.issuance(invoiceRequest, taxPolicy).getItems().size() == 0, is(true));
+    }
+
+    @Test
     public void twiceCalledCalculateTaxTest() {
         invoiceRequest.add(requestItem);
         invoiceRequest.add(requestItem);
