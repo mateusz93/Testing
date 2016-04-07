@@ -46,7 +46,6 @@ public class BookKeeperTest {
 
         requestItem = new RequestItem(productData, 12, money);
         invoiceRequest = new InvoiceRequest(clientData);
-        invoiceRequest.add(requestItem);
 
         invoiceFactory = new InvoiceFactory();
         bookKeeper = new BookKeeper(invoiceFactory);
@@ -54,6 +53,7 @@ public class BookKeeperTest {
 
     @Test
     public void oneReturnInvoiceTest() {
+        invoiceRequest.add(requestItem);
         when(taxPolicy.calculateTax(any(ProductType.class), any(Money.class))).thenReturn(tax);
         assertThat(bookKeeper.issuance(invoiceRequest, taxPolicy).getItems().size() == 1, is(true));
     }
@@ -61,9 +61,17 @@ public class BookKeeperTest {
     @Test
     public void twiceCalledCalculateTaxTest() {
         invoiceRequest.add(requestItem);
+        invoiceRequest.add(requestItem);
         when(taxPolicy.calculateTax(any(ProductType.class), any(Money.class))).thenReturn(tax);
         bookKeeper.issuance(invoiceRequest, taxPolicy);
         verify(taxPolicy, times(2)).calculateTax(any(ProductType.class), any(Money.class));
+    }
+
+    @Test
+    public void zeroCalledCalculateTaxTest() {
+        when(taxPolicy.calculateTax(any(ProductType.class), any(Money.class))).thenReturn(tax);
+        bookKeeper.issuance(invoiceRequest, taxPolicy);
+        verify(taxPolicy, times(0)).calculateTax(any(ProductType.class), any(Money.class));
     }
 
 }
