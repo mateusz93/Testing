@@ -38,10 +38,10 @@ public class SimilarityFinderTest {
 
         public MySequenceSearcher() {
             searchResult = new MySearchResult();
-            searchResult.setPosition(-1);
         }
 
         public SearchResult search(int i, int[] ints) {
+            searchResult.setPosition(-1);
             for (int j = 0; j < ints.length; ++j) {
                 if (ints[j] == i) {
                     searchResult.setPosition(j);
