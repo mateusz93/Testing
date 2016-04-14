@@ -1,7 +1,6 @@
 package edu.iis.mto.staticmock;
 
 import edu.iis.mto.staticmock.reader.FileNewsReader;
-import edu.iis.mto.staticmock.reader.NewsReader;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,12 +9,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.*;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 /**
  * @Author Mateusz Wieczorek, 11.04.16.
@@ -28,11 +27,14 @@ public class NewsLoaderTest {
     private NewsReaderFactory newsReaderFactory;
     private FileNewsReader fileNewsReader;
     private Configuration configuration;
+    private PublishableNews publishableNews;
 
     @Before
     public void setUp() {
         mockStatic(ConfigurationLoader.class);
         mockStatic(NewsReaderFactory.class);
+        mockStatic(PublishableNews.class);
+        publishableNews = mock(PublishableNews.class);
         configurationLoader = mock(ConfigurationLoader.class);
         newsReaderFactory = mock(NewsReaderFactory.class);
         configuration = mock(Configuration.class);
@@ -40,7 +42,7 @@ public class NewsLoaderTest {
         when(configuration.getReaderType()).thenReturn("type");
         when(ConfigurationLoader.getInstance()).thenReturn(configurationLoader);
         when(configurationLoader.loadConfiguration()).thenReturn(configuration);
-        when(newsReaderFactory.getReader(any(String.class))).thenReturn(fileNewsReader);
+        when(NewsReaderFactory.getReader(any(String.class))).thenReturn(fileNewsReader);
     }
 
     @Test
@@ -50,6 +52,7 @@ public class NewsLoaderTest {
 
         NewsLoader newsLoader = new NewsLoader();
         PublishableNews publishableNews = newsLoader.loadNews();
+
         assertThat(publishableNews.getPublicContent().size(), is(3));
         assertThat(publishableNews.getSubscribentContent().size(), is(0));
     }
@@ -61,9 +64,35 @@ public class NewsLoaderTest {
 
         NewsLoader newsLoader = new NewsLoader();
         PublishableNews publishableNews = newsLoader.loadNews();
+
         assertThat(publishableNews.getPublicContent().size(), is(0));
         assertThat(publishableNews.getSubscribentContent().size(), is(3));
     }
+
+    @Test
+    public void theNumberOfAddPublicInfoMethodCalls() {
+
+        when(fileNewsReader.read()).thenReturn(getPublishableIncomingNew());
+        when(PublishableNews.create()).thenReturn(publishableNews);
+
+        NewsLoader newsLoader = new NewsLoader();
+        newsLoader.loadNews();
+
+        verify(publishableNews, times(3)).addPublicInfo(any(String.class));
+    }
+
+    @Test
+    public void theNumberOfAddForSubscriptionMethodCalls() {
+
+        when(fileNewsReader.read()).thenReturn(getSubscribedIncomingNew());
+        when(PublishableNews.create()).thenReturn(publishableNews);
+
+        NewsLoader newsLoader = new NewsLoader();
+        newsLoader.loadNews();
+
+        verify(publishableNews, times(3)).addForSubscription(any(String.class), any(SubsciptionType.class));
+    }
+
 
     private IncomingNews getSubscribedIncomingNew() {
         IncomingNews incomingNews = new IncomingNews();
