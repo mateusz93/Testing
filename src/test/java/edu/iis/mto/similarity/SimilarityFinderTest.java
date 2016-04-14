@@ -1,5 +1,6 @@
 package edu.iis.mto.similarity;
 
+import edu.iis.mto.search.SearchResult;
 import edu.iis.mto.search.SequenceSearcher;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,15 +9,52 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Created by Mateusz on 2016-04-07.
+ * @Author Mateusz Wieczorek
  */
 public class SimilarityFinderTest {
 
     private SequenceSearcher searcher;
 
+    private class MySearchResult implements SearchResult {
+
+        public void setPosition(int position) {
+            this.position = position;
+        }
+
+        private int position;
+
+        public boolean isFound() {
+            return position != -1;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+    }
+
+    private class MySequenceSearcher implements SequenceSearcher {
+
+        private MySearchResult searchResult;
+
+        public MySequenceSearcher() {
+            searchResult = new MySearchResult();
+            searchResult.setPosition(-1);
+        }
+
+        public SearchResult search(int i, int[] ints) {
+            for (int j = 0; j < ints.length; ++j) {
+                if (ints[j] == i) {
+                    searchResult.setPosition(j);
+                    break;
+                }
+            }
+            return searchResult;
+        }
+    }
+
     @Before
     public void setUp() {
-        searcher = null;
+        searcher = new MySequenceSearcher();
     }
 
     @Test
