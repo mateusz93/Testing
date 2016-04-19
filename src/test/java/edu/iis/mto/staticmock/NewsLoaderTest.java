@@ -20,7 +20,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
  * @Author Mateusz Wieczorek, 11.04.16.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest( {ConfigurationLoader.class, NewsReaderFactory.class} )
+@PrepareForTest( {ConfigurationLoader.class, NewsReaderFactory.class, PublishableNews.class} )
 public class NewsLoaderTest {
 
     private ConfigurationLoader configurationLoader;
@@ -33,8 +33,7 @@ public class NewsLoaderTest {
     public void setUp() {
         mockStatic(ConfigurationLoader.class);
         mockStatic(NewsReaderFactory.class);
-        mockStatic(PublishableNews.class);
-        publishableNews = mock(PublishableNews.class);
+
         configurationLoader = mock(ConfigurationLoader.class);
         newsReaderFactory = mock(NewsReaderFactory.class);
         configuration = mock(Configuration.class);
@@ -71,6 +70,8 @@ public class NewsLoaderTest {
 
     @Test
     public void theNumberOfAddPublicInfoMethodCalls() {
+        mockStatic(PublishableNews.class);
+        publishableNews = mock(PublishableNews.class);
 
         when(fileNewsReader.read()).thenReturn(getPublishableIncomingNew());
         when(PublishableNews.create()).thenReturn(publishableNews);
@@ -83,6 +84,8 @@ public class NewsLoaderTest {
 
     @Test
     public void theNumberOfAddForSubscriptionMethodCalls() {
+        mockStatic(PublishableNews.class);
+        publishableNews = mock(PublishableNews.class);
 
         when(fileNewsReader.read()).thenReturn(getSubscribedIncomingNew());
         when(PublishableNews.create()).thenReturn(publishableNews);
