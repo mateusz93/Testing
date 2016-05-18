@@ -1,11 +1,8 @@
 package edu.iis.mto.serverloadbalancer;
 
-
+import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-
-import org.hamcrest.Matcher;
-import org.junit.Test;
 
 public class ServerLoadBalancerTest {
 
@@ -17,36 +14,29 @@ public class ServerLoadBalancerTest {
     @Test
     public void balancingServerWithNoVms() {
         //given
-        Server server = a(server().withCapacity(1));
+        Server server = getServer((ServerBuilder.server()).withCapacity(1));
 
         //when
-        balancing(serversListWith(server), emptyListOfVms());
+        balancing(serversListWith(server), emptyListOfVirtualMachines());
 
         //then
-        assertThat(server, hasCurrentLoadOf(0.0d));
+        assertThat(server, CurrentLoadPercentageMatcher.hasCurrentLoadOf(0.0d));
     }
 
-    private Matcher<? super Server> hasCurrentLoadOf(double expectedLoadPercentage) {
-        return new CurrentLoadPercentageMatcher(expectedLoadPercentage);
+    private void balancing(Server[] servers, VirtualMachine[] virtualMachines) {
+        new ServerLoadBalancer().balance(servers, virtualMachines);
     }
 
-    private void balancing(Server[] servers, Vm[] vms) {
-        new ServerLoadBalancer().balance(servers, vms);
-    }
-
-    private Vm[] emptyListOfVms() {
-        return new Vm[0];
+    private VirtualMachine[] emptyListOfVirtualMachines() {
+        return new VirtualMachine[0];
     }
 
     private Server[] serversListWith(Server... servers) {
         return servers;
     }
 
-    private Server a(ServerBuilder serverBuilder) {
+    private Server getServer(ServerBuilder serverBuilder) {
         return serverBuilder.build();
     }
 
-    private ServerBuilder server() {
-        return new ServerBuilder();
-    }
 }
