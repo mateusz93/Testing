@@ -23,6 +23,32 @@ public class ServerLoadBalancerTest {
         assertThat(server, CurrentLoadPercentageMatcher.hasCurrentLoadOf(0.0d));
     }
 
+    @Test
+    public void balancingServerWithOneSlotCapacityAndOneSlotVm_fillsServerWithTheVm() {
+        //given
+        Server server = getServer((ServerBuilder.server()).withCapacity(1));
+        VirtualMachine virtualMachine = getVirtualMachine(vm().ofSize(1));
+
+        //when
+        balancing(serversListWith(server), emptyListOfVirtualMachines(virtualMachine));
+
+        //then
+        assertThat(server, CurrentLoadPercentageMatcher.hasCurrentLoadOf(100.0d));
+        assertThat("server should contain the vm", server.cotains(virtualMachine));
+    }
+
+    private VirtualMachine[] emptyListOfVirtualMachines(VirtualMachine... virtualMachines) {
+        return virtualMachines;
+    }
+
+    private VirtualMachine getVirtualMachine(VirtualMachineBuilder builder) {
+        return builder.build();
+    }
+
+    private VirtualMachineBuilder vm() {
+        return new VirtualMachineBuilder();
+    }
+
     private void balancing(Server[] servers, VirtualMachine[] virtualMachines) {
         new ServerLoadBalancer().balance(servers, virtualMachines);
     }
