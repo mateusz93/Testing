@@ -13,7 +13,7 @@ public class VirtualMachineBuilder implements Builder<VirtualMachine> {
     }
 
     public VirtualMachine build() {
-        return new VirtualMachine();
+        return new VirtualMachine(size);
     }
 
     public static VirtualMachineBuilder vm() {
