@@ -33,7 +33,7 @@ public class ServerLoadBalancerTest {
         balancing(serversListWith(server), emptyListOfVirtualMachines(virtualMachine));
 
         //then
-        assertThat(server, CurrentLoadPercentageMatcher.hasCurrentLoadOf(100.0d));
+        assertThat(server, CurrentLoadPercentageMatcher.hasCurrentLoadOf(Server.MAXIMUM_LOAD));
         assertThat("server should contain the vm", server.contains(virtualMachine));
     }
 
