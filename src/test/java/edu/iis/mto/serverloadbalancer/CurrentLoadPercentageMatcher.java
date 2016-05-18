@@ -38,7 +38,4 @@ public class CurrentLoadPercentageMatcher extends TypeSafeMatcher<Server> {
         return new CurrentLoadPercentageMatcher(expectedLoadPercentage);
     }
 
-    public static Matcher<? super Server> hasAVmsCountOf(int expectedVmsCount) {
-        return new ServerVmsCountMatcher(expectedVmsCount);
-    }
 }

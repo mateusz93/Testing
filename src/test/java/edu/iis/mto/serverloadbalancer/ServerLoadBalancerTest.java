@@ -62,7 +62,7 @@ public class ServerLoadBalancerTest {
         balancing(serversListWith(server), emptyListOfVirtualMachines(virtualMachine1, virtualMachine2));
 
         //then
-        assertThat(server, CurrentLoadPercentageMatcher.hasAVmsCountOf(2));
+        assertThat(server, ServerVmsCountMatcher.hasAVmsCountOf(2));
         assertThat("server should contain the first vm", server.contains(virtualMachine1));
         assertThat("server should contain the second vm", server.contains(virtualMachine2));
     }
