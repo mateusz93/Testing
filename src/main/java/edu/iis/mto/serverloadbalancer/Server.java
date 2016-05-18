@@ -22,7 +22,7 @@ public class Server {
     }
 
     public void addVirtualMachine(VirtualMachine vm) {
-        currentLoadPercentage = vm.size / (double) capacity * MAXIMUM_LOAD;
+        currentLoadPercentage = loadOfVirtualMachine(vm);
         virtualMachines.add(vm);
     }
 
@@ -31,6 +31,10 @@ public class Server {
     }
 
     public boolean canFit(VirtualMachine vm) {
-        return currentLoadPercentage + (vm.size / (double) this.capacity * MAXIMUM_LOAD) <= MAXIMUM_LOAD;
+        return currentLoadPercentage + loadOfVirtualMachine(vm) <= MAXIMUM_LOAD;
+    }
+
+    private double loadOfVirtualMachine(VirtualMachine vm) {
+        return vm.size / (double) this.capacity * MAXIMUM_LOAD;
     }
 }
