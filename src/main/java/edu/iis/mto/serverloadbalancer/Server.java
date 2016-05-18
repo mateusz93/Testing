@@ -22,7 +22,7 @@ public class Server {
     }
 
     public void addVirtualMachine(VirtualMachine vm) {
-        currentLoadPercentage = loadOfVirtualMachine(vm);
+        currentLoadPercentage += loadOfVirtualMachine(vm);
         virtualMachines.add(vm);
     }
 
