@@ -51,6 +51,22 @@ public class ServerLoadBalancerTest {
         assertThat("server should contain the vm", server.contains(virtualMachine));
     }
 
+    @Test
+    public void balancingServerWithEnoughRoom_fillsTheServerWithAllVm() {
+        //given
+        Server server = get((ServerBuilder.server()).withCapacity(10));
+        VirtualMachine virtualMachine1 = get(VirtualMachineBuilder.vm().ofSize(1));
+        VirtualMachine virtualMachine2 = get(VirtualMachineBuilder.vm().ofSize(1));
+
+        //when
+        balancing(serversListWith(server), emptyListOfVirtualMachines(virtualMachine1, virtualMachine2));
+
+        //then
+        assertThat(server, CurrentLoadPercentageMatcher.hasAVmsCountOf(2));
+        assertThat("server should contain the first vm", server.contains(virtualMachine1));
+        assertThat("server should contain the second vm", server.contains(virtualMachine2));
+    }
+
     private VirtualMachine[] emptyListOfVirtualMachines(VirtualMachine... virtualMachines) {
         return virtualMachines;
     }
