@@ -18,7 +18,7 @@ public class Server {
     }
 
     public boolean contains(VirtualMachine virtualMachine) {
-        return true;
+        return virtualMachines.contains(virtualMachine);
     }
 
     public void addVirtualMachine(VirtualMachine vm) {
