@@ -3,7 +3,7 @@ package edu.iis.mto.serverloadbalancer;
 /**
  * @Author Mateusz Wieczorek, 18.05.16.
  */
-public class VirtualMachineBuilder {
+public class VirtualMachineBuilder implements Builder<VirtualMachine> {
 
     private int size;
 
@@ -14,5 +14,9 @@ public class VirtualMachineBuilder {
 
     public VirtualMachine build() {
         return new VirtualMachine();
+    }
+
+    public static VirtualMachineBuilder vm() {
+        return new VirtualMachineBuilder();
     }
 }

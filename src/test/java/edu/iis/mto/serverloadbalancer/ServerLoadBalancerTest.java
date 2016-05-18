@@ -14,7 +14,7 @@ public class ServerLoadBalancerTest {
     @Test
     public void balancingServerWithNoVms() {
         //given
-        Server server = getServer((ServerBuilder.server()).withCapacity(1));
+        Server server = get((ServerBuilder.server()).withCapacity(1));
 
         //when
         balancing(serversListWith(server), emptyListOfVirtualMachines());
@@ -26,8 +26,8 @@ public class ServerLoadBalancerTest {
     @Test
     public void balancingServerWithOneSlotCapacityAndOneSlotVm_fillsServerWithTheVm() {
         //given
-        Server server = getServer((ServerBuilder.server()).withCapacity(1));
-        VirtualMachine virtualMachine = getVirtualMachine(vm().ofSize(1));
+        Server server = get((ServerBuilder.server()).withCapacity(1));
+        VirtualMachine virtualMachine = get(VirtualMachineBuilder.vm().ofSize(1));
 
         //when
         balancing(serversListWith(server), emptyListOfVirtualMachines(virtualMachine));
@@ -39,14 +39,6 @@ public class ServerLoadBalancerTest {
 
     private VirtualMachine[] emptyListOfVirtualMachines(VirtualMachine... virtualMachines) {
         return virtualMachines;
-    }
-
-    private VirtualMachine getVirtualMachine(VirtualMachineBuilder builder) {
-        return builder.build();
-    }
-
-    private VirtualMachineBuilder vm() {
-        return new VirtualMachineBuilder();
     }
 
     private void balancing(Server[] servers, VirtualMachine[] virtualMachines) {
@@ -61,8 +53,7 @@ public class ServerLoadBalancerTest {
         return servers;
     }
 
-    private Server getServer(ServerBuilder serverBuilder) {
-        return serverBuilder.build();
+    private <T> T get(Builder<T> builder) {
+        return builder.build();
     }
-
 }
