@@ -6,7 +6,7 @@ package edu.iis.mto.serverloadbalancer;
 public class ServerLoadBalancer {
 
     public void balance(Server[] servers, VirtualMachine[] virtualMachines) {
-        if (virtualMachines.length > 0) {
+        for (VirtualMachine vm : virtualMachines) {
             servers[0].addVirtualMachine(virtualMachines[0]);
         }
     }
