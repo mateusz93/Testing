@@ -7,7 +7,7 @@ public class ServerLoadBalancer {
 
     public void balance(Server[] servers, VirtualMachine[] virtualMachines) {
         if (virtualMachines.length > 0) {
-            servers[0].currentLoadPercentage = virtualMachines[0].size / (double) servers[0].capacity * 100.0d;
+            servers[0].addVirtualMachine(virtualMachines[0]);
         }
     }
 }

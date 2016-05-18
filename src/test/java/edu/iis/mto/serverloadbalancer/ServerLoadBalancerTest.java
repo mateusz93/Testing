@@ -34,7 +34,7 @@ public class ServerLoadBalancerTest {
 
         //then
         assertThat(server, CurrentLoadPercentageMatcher.hasCurrentLoadOf(100.0d));
-        assertThat("server should contain the vm", server.cotains(virtualMachine));
+        assertThat("server should contain the vm", server.contains(virtualMachine));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class ServerLoadBalancerTest {
 
         //then
         assertThat(server, CurrentLoadPercentageMatcher.hasCurrentLoadOf(10.0d));
-        assertThat("server should contain the vm", server.cotains(virtualMachine));
+        assertThat("server should contain the vm", server.contains(virtualMachine));
     }
 
     private VirtualMachine[] emptyListOfVirtualMachines(VirtualMachine... virtualMachines) {
