@@ -5,9 +5,13 @@ package edu.iis.mto.serverloadbalancer;
  */
 public class VirtualMachine {
 
-    public int size;
+    private int size;
 
     public VirtualMachine(int size) {
         this.size = size;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

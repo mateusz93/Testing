@@ -9,8 +9,8 @@ import java.util.List;
 public class Server {
 
     public static final double MAXIMUM_LOAD = 100.0d;
-    public double currentLoadPercentage;
-    public int capacity;
+    private double currentLoadPercentage;
+    private int capacity;
     private List<VirtualMachine> virtualMachines = new ArrayList<VirtualMachine>();
 
     public Server(int capacity) {
@@ -35,6 +35,14 @@ public class Server {
     }
 
     private double loadOfVirtualMachine(VirtualMachine vm) {
-        return vm.size / (double) this.capacity * MAXIMUM_LOAD;
+        return vm.getSize() / (double) this.capacity * MAXIMUM_LOAD;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public double getCurrentLoadPercentage() {
+        return currentLoadPercentage;
     }
 }
