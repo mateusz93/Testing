@@ -9,7 +9,7 @@ public class ServerLoadBalancer {
 
     public void balance(Server[] servers, Vm[] vms) {
         if (isNotEmpty(vms)) {
-            servers[0].currentLoadPercentage = MAXIMUM_LOADED;
+            servers[0].currentLoadPercentage = vms[0].size / (double)servers[0].capacity * MAXIMUM_LOADED;
         }
     }
 
