@@ -15,7 +15,7 @@ public class ServerLoadBalancerTest {
 
 	@Test
 	public void balancingAServer_noVms_serverStaysEmpty() {
-		Server server = getServer(server().withCapacity(1));
+		Server server = getItem(server().withCapacity(1));
 
 		balance(aListOfServersWith(server), anEmptyListOfVms());
 
@@ -24,13 +24,17 @@ public class ServerLoadBalancerTest {
 
 	@Test
 	public void balancingOneServerWithOneSlotCapacityAndOneVms_fillsTheServerWithTheVm() {
-		Server server = getServer(server().withCapacity(1));
-		Vm vm = getVm(vm().ofSize(1));
+		Server server = getItem(server().withCapacity(1));
+		Vm vm = getItem(vm().ofSize(1));
 
 		balance(aListOfServersWith(server), anListOfVmsWith(vm));
 
 		assertThat(server, hasLoadPercentageOf(100.0d));
 		assertThat("the server should contain vm", server.contains(vm));
+	}
+
+	private <T> T getItem(IBuilder<T> builder) {
+		return builder.build();
 	}
 
 	private Vm[] anListOfVmsWith(Vm vm) {
@@ -51,14 +55,6 @@ public class ServerLoadBalancerTest {
 
 	private void balance(Server[] servers, Vm[] vms) {
 		new ServerLoadBalancer().balance(servers, vms);
-	}
-
-	private Server getServer(ServerBuilder builder) {
-		return builder.build();
-	}
-
-	private Vm getVm(VmBuilder builder) {
-		return builder.build();
 	}
 
 	private VmBuilder vm() {
