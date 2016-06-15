@@ -18,6 +18,16 @@ public class Server {
         vms = new ArrayList<Vm>();
     }
 
+    public Server(int capacity, double loadedPercentage) {
+        this.capacity = capacity;
+        this.currentLoadPercentage = loadedPercentage;
+        vms = new ArrayList<Vm>();
+        for (int i = 0; i < loadedPercentage / capacity; ++i) {
+            Vm vm = new Vm(1);
+            vms.add(vm);
+        }
+    }
+
     public boolean contains(Vm vm) {
         for (Vm v : vms) {
             if (v == vm) {
@@ -28,12 +38,17 @@ public class Server {
     }
 
     public void addVm(Vm vm) {
-        vms.add(vm);
-        this.currentLoadPercentage = vm.size / (double)this.capacity * MAXIMUM_LOAD;
+        if (isFreeCapacity(vm)) {
+            vms.add(vm);
+            this.currentLoadPercentage += vm.size / (double)this.capacity * MAXIMUM_LOAD;
+        }
     }
 
     public int getVmsCount() {
         return vms.size();
     }
 
+    public boolean isFreeCapacity(Vm vm) {
+        return (this.currentLoadPercentage + vm.size / (double)this.capacity * MAXIMUM_LOAD) <= MAXIMUM_LOAD;
+    }
 }

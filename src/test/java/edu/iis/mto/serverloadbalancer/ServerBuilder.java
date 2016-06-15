@@ -14,7 +14,7 @@ public class ServerBuilder implements IBuilder<Server> {
     }
 
     public Server build() {
-        return new Server(capacity);
+        return new Server(capacity, loadedPercentage);
     }
 
     public IBuilder<Server> withCurrentLoadOf(double loadedPercentage) {
