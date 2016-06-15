@@ -5,11 +5,9 @@ package edu.iis.mto.serverloadbalancer;
  */
 public class ServerLoadBalancer {
 
-    private final double MAXIMUM_LOADED = 100.0d;
-
     public void balance(Server[] servers, Vm[] vms) {
         if (isNotEmpty(vms)) {
-            servers[0].currentLoadPercentage = vms[0].size / (double)servers[0].capacity * MAXIMUM_LOADED;
+            servers[0].addVm(vms[0]);
         }
     }
 
