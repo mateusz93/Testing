@@ -5,6 +5,8 @@ package edu.iis.mto.serverloadbalancer;
  */
 public class ServerLoadBalancer {
 
+    private final double MAXIMUM_LOAD = 100.0d;
+
     public void balance(Server[] servers, Vm[] vms) {
         for (Vm vm : vms) {
             getTheLeastLoadedServer(servers).addVm(vm);
@@ -13,7 +15,7 @@ public class ServerLoadBalancer {
 
     private Server getTheLeastLoadedServer(Server[] servers) {
         Server theLeastLoadedServer = null;
-        double theLeastLoadedServerPercentage = 100.1d;
+        double theLeastLoadedServerPercentage = MAXIMUM_LOAD;
         for (Server server : servers) {
             if (server.currentLoadPercentage < theLeastLoadedServerPercentage) {
                 theLeastLoadedServer = server;
