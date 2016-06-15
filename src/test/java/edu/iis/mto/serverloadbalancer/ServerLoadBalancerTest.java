@@ -44,6 +44,19 @@ public class ServerLoadBalancerTest {
 		assertThat("the server should contain vm", server.contains(vm));
 	}
 
+	@Test
+	public void balancingServerWithEnougCapacity_shouldAddVms() {
+		Server server = getItem(server().withCapacity(10));
+		Vm vm1 = getItem(vm().sizeOf(1));
+		Vm vm2 = getItem(vm().sizeOf(1));
+
+		balance(serverListWith(server), vmsListWith(vm1, vm2));
+
+		assertThat(server, hasVmCountOf(2));
+		assertThat("the server should contain vm", server.contains(vm1));
+		assertThat("the server should contain vm", server.contains(vm2));
+	}
+
 	private Vm[] vmsListWith(Vm vm) {
 		return new Vm[]{vm};
 	}
