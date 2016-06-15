@@ -16,6 +16,10 @@ public class Server {
         return true;
     }
 
+    public void addVm(Vm vm) {
+        this.currentLoadPercentage = vm.size / (double) capacity * 100.0d;
+    }
+
     public int getCapacity() {
         return capacity;
     }
