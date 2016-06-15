@@ -22,6 +22,18 @@ public class ServerLoadBalancerTest {
 		assertThat(server, hasLoadPercentageOf(0.0d));
 	}
 
+	@Test
+	public void balancingOneServerWithOneSlotCapacityAndOneVms_fillsTheServerWithTheVm() {
+		Server server = getServer(server().withCapacity(1));
+		Vm vm = getVm(vm().ofSize(1));
+
+		balance(aListOfServersWith(server), anListOfVmsWith(vm));
+
+		assertThat(server, hasLoadPercentageOf(100.0d));
+		assertThat("the server should contain vm", server.contains(vm));
+	}
+
+
 	private Matcher<? super Server> hasLoadPercentageOf(double expectedLoadPercentage) {
 		return new CurrentLoadPercentageMatcher(expectedLoadPercentage);
 	}
