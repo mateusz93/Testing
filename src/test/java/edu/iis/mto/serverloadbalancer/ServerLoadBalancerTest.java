@@ -15,7 +15,7 @@ public class ServerLoadBalancerTest {
 
 	@Test
 	public void balancingAServer_noVms_serverStaysEmpty() {
-		Server server = a(server().withCapacity(1));
+		Server server = getServer(server().withCapacity(1));
 
 		balance(aListOfServersWith(server), anEmptyListOfVms());
 
@@ -38,7 +38,7 @@ public class ServerLoadBalancerTest {
 		new ServerLoadBalancer().balance(servers, vms);
 	}
 
-	private Server a(ServerBuilder builder) {
+	private Server getServer(ServerBuilder builder) {
 		return builder.build();
 	}
 
