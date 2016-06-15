@@ -12,5 +12,13 @@ public class ServerLoadBalancerTest {
 		assertThat(true, equalTo(true));
 	}
 
+	@Test
+	public void balancingServerWithNoVmsServerStayEmpty() {
+		Server server = a(server().withCapacity(10));
+
+		balance(serverListWith(server), emptyVmList());
+
+		assertThat(server, hasLoadPercentage(0.0d));
+	}
 
 }
