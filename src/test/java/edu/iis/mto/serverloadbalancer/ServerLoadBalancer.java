@@ -6,12 +6,8 @@ package edu.iis.mto.serverloadbalancer;
 public class ServerLoadBalancer {
 
     public void balance(Server[] servers, Vm[] vms) {
-        if (isNotEmpty(vms)) {
-            servers[0].addVm(vms[0]);
+        for (Vm vm : vms) {
+            servers[0].addVm(vm);
         }
-    }
-
-    private boolean isNotEmpty(Vm[] vms) {
-        return vms.length > 0;
     }
 }
