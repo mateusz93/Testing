@@ -19,7 +19,12 @@ public class Server {
     }
 
     public boolean contains(Vm vm) {
-        return true;
+        for (Vm v : vms) {
+            if (v == vm) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addVm(Vm vm) {
