@@ -6,6 +6,7 @@ package edu.iis.mto.serverloadbalancer;
 public class ServerBuilder implements IBuilder<Server> {
 
     private int capacity;
+    private double loadedLevel;
 
     public ServerBuilder withCapacity(int capacity) {
         this.capacity = capacity;
@@ -13,6 +14,11 @@ public class ServerBuilder implements IBuilder<Server> {
     }
 
     public Server build() {
-        return new Server(capacity);
+        return new Server(capacity, loadedLevel);
+    }
+
+    public IBuilder<Server> withCurrentLoad(double expectedLoaded) {
+        loadedLevel = expectedLoaded;
+        return this;
     }
 }

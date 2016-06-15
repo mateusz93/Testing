@@ -17,6 +17,12 @@ public class Server {
         vms = new ArrayList<Vm>();
     }
 
+    public Server(int capacity, double loadedLevel) {
+        this.capacity = capacity;
+        this.currentLoadPercentage = loadedLevel;
+        vms = new ArrayList<Vm>();
+    }
+
     public boolean contains(Vm vm) {
         return true;
     }

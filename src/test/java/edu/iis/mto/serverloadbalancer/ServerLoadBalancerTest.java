@@ -84,8 +84,8 @@ public class ServerLoadBalancerTest {
 		return new CurrentLoadPercentageMatcher(expectedLoadPercentage);
 	}
 
-	private Server[] aListOfServersWith(Server server) {
-		return new Server[]{server};
+	private Server[] aListOfServersWith(Server... server) {
+		return server;
 	}
 
 	private Vm[] anEmptyListOfVms() {
