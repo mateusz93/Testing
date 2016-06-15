@@ -17,9 +17,9 @@ public class ServerLoadBalancer {
         Server theLeastLoadedServer = null;
         double theLeastLoadedServerPercentage = MAXIMUM_LOAD;
         for (Server server : servers) {
-            if (server.currentLoadPercentage < theLeastLoadedServerPercentage) {
+            if (server.getCurrentLoadPercentage() < theLeastLoadedServerPercentage) {
                 theLeastLoadedServer = server;
-                theLeastLoadedServerPercentage = server.currentLoadPercentage;
+                theLeastLoadedServerPercentage = server.getCurrentLoadPercentage();
             }
         }
         return theLeastLoadedServer;
