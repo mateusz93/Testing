@@ -17,7 +17,7 @@ public class ServerLoadBalancer {
         int theLeastLoadedServerIndex = -1;
         double theLeastLoadedServerValue = MAXIMUM_LOAD;
         for (int i = 0; i < servers.length; ++i) {
-            if (servers[i].currentLoadPercentage <= theLeastLoadedServerValue) {
+            if (servers[i].currentLoadPercentage < theLeastLoadedServerValue) {
                 theLeastLoadedServerValue = servers[i].currentLoadPercentage;
                 theLeastLoadedServerIndex = i;
             }
