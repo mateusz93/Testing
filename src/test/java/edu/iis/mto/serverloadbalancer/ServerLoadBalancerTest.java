@@ -33,6 +33,9 @@ public class ServerLoadBalancerTest {
 		assertThat("the server should contain vm", server.contains(vm));
 	}
 
+	private Vm[] anListOfVmsWith(Vm vm) {
+		return new Vm[]{vm};
+	}
 
 	private Matcher<? super Server> hasLoadPercentageOf(double expectedLoadPercentage) {
 		return new CurrentLoadPercentageMatcher(expectedLoadPercentage);
@@ -52,6 +55,14 @@ public class ServerLoadBalancerTest {
 
 	private Server getServer(ServerBuilder builder) {
 		return builder.build();
+	}
+
+	private Vm getVm(VmBuilder builder) {
+		return builder.build();
+	}
+
+	private VmBuilder vm() {
+		return new VmBuilder();
 	}
 
 	private ServerBuilder server() {

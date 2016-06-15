@@ -10,4 +10,8 @@ public class Server {
     public Server(int capacity) {
 
     }
+
+    public boolean contains(Vm vm) {
+        return true;
+    }
 }
